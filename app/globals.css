@@ -1,0 +1,232 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+    --font-roboto: "Roboto", sans-serif;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 94.1%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .bg-grid-pattern {
+    background-image: radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.15) 1px, transparent 0);
+    background-size: 20px 20px;
+  }
+
+  .font-roboto {
+    font-family: var(--font-roboto);
+  }
+
+  .bg-blockchain-circuit {
+    background-image: url("/images/blockchain-circuit.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .bg-hextech-shield {
+    background-image: url("/images/hextech-shield.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+@layer components {
+  /* Sui Wallet Kit Styles */
+  .sui-wallet-kit {
+    --swk-border-radius: 8px;
+    --swk-font-family: inherit;
+    --swk-text-color: hsl(var(--foreground));
+    --swk-background-color: hsl(var(--background));
+    --swk-border-color: hsl(var(--border));
+    --swk-primary-color: hsl(var(--primary));
+    --swk-primary-foreground: hsl(var(--primary-foreground));
+  }
+
+  /* Connect Button Styles */
+  .connect-button {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium;
+    @apply ring-offset-background transition-colors;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+    @apply disabled:pointer-events-none disabled:opacity-50;
+    @apply bg-primary text-primary-foreground;
+    @apply h-10 px-4 py-2;
+  }
+
+  .connect-button:hover {
+    @apply bg-primary/90;
+  }
+
+  /* Wallet Modal Styles */
+  .wallet-modal {
+    @apply fixed inset-0 z-50 backdrop-blur-sm;
+    background-color: hsl(var(--background) / 0.8);
+  }
+
+  .wallet-modal-content {
+    @apply fixed z-50 grid w-full max-w-lg gap-4 border bg-background p-6 shadow-lg duration-200;
+    @apply sm:rounded-lg;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .wallet-item {
+    @apply flex items-center gap-3 rounded-lg border p-3 cursor-pointer transition-colors;
+  }
+
+  .wallet-item:hover {
+    @apply bg-accent text-accent-foreground;
+  }
+
+  .wallet-item-icon {
+    @apply h-8 w-8 rounded-md;
+  }
+
+  .wallet-item-info {
+    @apply flex-1 space-y-1;
+  }
+
+  .wallet-item-name {
+    @apply text-sm font-medium leading-none;
+  }
+
+  .wallet-item-description {
+    @apply text-xs text-muted-foreground;
+  }
+
+  /* Account Info Styles */
+  .account-info {
+    @apply flex items-center gap-2 rounded-md border px-3 py-2 text-sm;
+  }
+
+  .account-address {
+    @apply font-mono text-xs;
+  }
+
+  .account-balance {
+    @apply text-xs font-medium;
+  }
+
+  /* Disconnect Button */
+  .disconnect-button {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium;
+    @apply ring-offset-background transition-colors;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+    @apply disabled:pointer-events-none disabled:opacity-50;
+    @apply border border-input bg-background;
+    @apply h-9 px-3;
+  }
+
+  .disconnect-button:hover {
+    @apply bg-accent text-accent-foreground;
+  }
+
+  /* Loading Spinner */
+  .loading-spinner {
+    @apply animate-spin rounded-full border-2 border-current;
+    border-top-color: transparent;
+  }
+
+  /* Message States */
+  .error-message {
+    @apply text-sm text-destructive;
+  }
+
+  .warning-message {
+    @apply text-sm text-yellow-600;
+  }
+
+  .success-message {
+    @apply text-sm text-green-600;
+  }
+
+  .dark .warning-message {
+    @apply text-yellow-400;
+  }
+
+  .dark .success-message {
+    @apply text-green-400;
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 640px) {
+  .wallet-modal-content {
+    width: 95vw;
+    max-width: none;
+  }
+
+  .account-info {
+    @apply flex-col items-start gap-1;
+  }
+}
+
+/* Animation keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
