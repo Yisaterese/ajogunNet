@@ -1,11 +1,11 @@
 // Sui blockchain configuration and contract addresses
 export const SUI_CONFIG = {
   // Contract Package ID - replace with your deployed contract
-  PACKAGE_ID:
-    process.env.NEXT_PUBLIC_PACKAGE_ID || "0x0000000000000000000000000000000000000000000000000000000000000000",
+  PACKAGE_ID: "0xa4c5f9954bb71af3b5ce546fe399bb792319862f16f394f253d1e7ed702dfce4",
+
 
   // Module names
-  MODULE_NAME: "digital_will",
+  MODULE_NAME: "willon_sui",
 
   // Function names
   FUNCTIONS: {
@@ -39,7 +39,7 @@ export const SUI_CONFIG = {
 // Validation functions
 export function isValidPackageId(packageId: string): boolean {
   return (
-    packageId !== "0x0000000000000000000000000000000000000000000000000000000000000000" &&
+    packageId !== SUI_CONFIG.PACKAGE_ID &&
     packageId.startsWith("0x") &&
     packageId.length === 66
   )
