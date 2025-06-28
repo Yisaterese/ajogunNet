@@ -285,7 +285,7 @@ export default function WalletPage() {
                                 <CreditCard className="w-5 h-5" />
                                 Buy/Sell
                             </Button>
-                            <Link href="/create-will" className="w-full flex items-center gap-3 px-3 py-2 text-left text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg">
+                            <Link href="/create" className="w-full flex items-center gap-3 px-3 py-2 text-left text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg">
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                 </svg>
