@@ -1,4 +1,112 @@
+
+'use client';
+
+import { useState } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Plus, Trash2 } from 'lucide-react';
+
+interface Heir {
+    address: string;
+    percentage: number;
+}
+
+export default function CreateWillPage() {
+    const [heirs, setHeirs] = useState<Heir[]>([{ address: '', percentage: 50 }, { address: '', percentage: 50 }]);
+
+    const addHeir = () => {
+        setHeirs([...heirs, { address: '', percentage: 0 }]);
+    };
+
+    const removeHeir = (index: number) => {
+        if (heirs.length > 1) {
+            setHeirs(heirs.filter((_, i) => i !== index));
+        }
+    };
+
+    const updateHeir = (index: number, field: keyof Heir, value: string | number) => {
+        const updatedHeirs = [...heirs];
+        updatedHeirs[index] = { ...updatedHeirs[index], [field]: value };
+        setHeirs(updatedHeirs);
+    };
+
+    return (
+        <div className="max-w-2xl mx-auto space-y-6">
+            <div className="text-center space-y-2">
+                <h1 className="text-3xl font-bold">Create Digital Will</h1>
+                <p className="text-muted-foreground">Configure your heirs and distribution</p>
+            </div>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                        Heirs & Distribution
+                    </CardTitle>
+                    <CardDescription>Enter the details for your will (demo mode)</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                    <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                            <Label className="text-base font-medium">Heirs</Label>
+                            <Button variant="outline" size="sm" onClick={addHeir}>
+                                <Plus className="h-4 w-4 mr-2" />
+                                Add Heir
+                            </Button>
+                        </div>
+                        {heirs.map((heir, index) => (
+                            <div key={index} className="border rounded-lg p-4 space-y-4">
+                                <div className="flex items-center justify-between">
+                                    <h4 className="font-medium">Heir {index + 1}</h4>
+                                    {heirs.length > 1 && (
+                                        <Button variant="ghost" size="sm" onClick={() => removeHeir(index)}>
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                    )}
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor={`heir-address-${index}`}>Sui Address</Label>
+                                    <Input
+                                        id={`heir-address-${index}`}
+                                        placeholder="0x..."
+                                        value={heir.address}
+                                        onChange={(e) => updateHeir(index, 'address', e.target.value)}
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor={`heir-percentage-${index}`}>Share Percentage</Label>
+                                    <Input
+                                        id={`heir-percentage-${index}`}
+                                        type="number"
+                                        placeholder="0"
+                                        value={heir.percentage}
+                                        onChange={(e) => updateHeir(index, 'percentage', Number.parseInt(e.target.value) || 0)}
+                                    />
+                                </div>
+                            </div>
+                        ))}
+                        <div className="bg-muted p-4 rounded-lg">
+                            <div className="flex justify-between items-center">
+                                <span>Total Percentage:</span>
+                                <span>
+                                    {heirs.reduce((sum, h) => sum + h.percentage, 0)}%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex justify-end">
+                        <Button disabled={true} title="This is a demo mode; no wallet integration active">
+                            Create Will
+                        </Button>
+                    </div>
+                </CardContent>
+            </Card>
+        </div>
+    );
+}
 // "use client"
+
 //
 // import { useState, useEffect } from "react"
 // import { useCurrentAccount, useSignAndExecuteTransaction, useSuiClientQuery, ConnectButton } from "@mysten/dapp-kit"
@@ -792,116 +900,3 @@
 //   );
 // }
 
-'use client';
-
-import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Plus, Trash2 } from 'lucide-react';
-
-interface Heir {
-    address: string;
-    percentage: number;
-}
-
-export default function CreateWillPage() {
-    const [heirs, setHeirs] = useState<Heir[]>([{ address: '', percentage: 50 }, { address: '', percentage: 50 }]);
-
-    const addHeir = () => {
-        if (heirs.length < 5) {
-            setHeirs([...heirs, { address: '', percentage: 0 }]);
-        }
-    };
-
-    const removeHeir = (index: number) => {
-        if (heirs.length > 1) {
-            setHeirs(heirs.filter((_, i) => i !== index));
-        }
-    };
-
-    const updateHeir = (index: number, field: keyof Heir, value: string | number) => {
-        const updatedHeirs = [...heirs];
-        updatedHeirs[index] = { ...updatedHeirs[index], [field]: value };
-        setHeirs(updatedHeirs);
-    };
-
-    return (
-        <div className="max-w-2xl mx-auto space-y-6">
-            <div className="text-center space-y-2">
-                <h1 className="text-3xl font-bold">Create Digital Will</h1>
-                <p className="text-muted-foreground">Configure your heirs and distribution</p>
-            </div>
-
-            <Card>
-                <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                        Step 1: Heirs & Distribution
-                    </CardTitle>
-                    <CardDescription>Enter the details for your will (demo mode)</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                    <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                            <Label className="text-base font-medium">Heirs (Max: 5)</Label>
-                            <Button variant="outline" size="sm" onClick={addHeir} disabled={heirs.length >= 5}>
-                                <Plus className="h-4 w-4 mr-2" />
-                                Add Heir
-                            </Button>
-                        </div>
-                        {heirs.map((heir, index) => (
-                            <div key={index} className="border rounded-lg p-4 space-y-4">
-                                <div className="flex items-center justify-between">
-                                    <h4 className="font-medium">Heir {index + 1}</h4>
-                                    {heirs.length > 1 && (
-                                        <Button variant="ghost" size="sm" onClick={() => removeHeir(index)}>
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                    )}
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor={`heir-address-${index}`}>Sui Address</Label>
-                                    <Input
-                                        id={`heir-address-${index}`}
-                                        placeholder="0x..."
-                                        value={heir.address}
-                                        onChange={(e) => updateHeir(index, 'address', e.target.value)}
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor={`heir-percentage-${index}`}>Share Percentage</Label>
-                                    <Input
-                                        id={`heir-percentage-${index}`}
-                                        type="number"
-                                        placeholder="0"
-                                        value={heir.percentage}
-                                        onChange={(e) => updateHeir(index, 'percentage', Number.parseInt(e.target.value) || 0)}
-                                        min="0"
-                                        max="100"
-                                    />
-                                </div>
-                            </div>
-                        ))}
-                        <div className="bg-muted p-4 rounded-lg">
-                            <div className="flex justify-between items-center">
-                                <span>Total Percentage:</span>
-                                <span className={heirs.reduce((sum, h) => sum + h.percentage, 0) === 100 ? 'text-green-600' : 'text-red-600'}>
-                  {heirs.reduce((sum, h) => sum + h.percentage, 0)}%
-                </span>
-                            </div>
-                            {heirs.reduce((sum, h) => sum + h.percentage, 0) !== 100 && (
-                                <p className="text-sm text-destructive mt-2">Percentages must sum to exactly 100%</p>
-                            )}
-                        </div>
-                    </div>
-                    <div className="flex justify-end">
-                        <Button disabled={true} title="This is a demo mode; no wallet integration active">
-                            Create Will
-                        </Button>
-                    </div>
-                </CardContent>
-            </Card>
-        </div>
-    );
-}
